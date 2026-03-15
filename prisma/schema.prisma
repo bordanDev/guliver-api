@@ -6,9 +6,32 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "generated/prisma"
+  moduleFormat    = "cjs"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model Device {
+  id Int @default(autoincrement()) @id
+  name String
+  location Location?
+}
+
+model Location {
+  id        Int    @default(autoincrement()) @id 
+  city      String
+  floor     Int
+  door      Int
+  deviceId  Int    @unique
+  device    Device @relation(fields: [deviceId], references: [id])
+}
+
+model VisitorLog {
+  id        Int      @id @default(autoincrement())
+  deviceId  String
+  count     Int
+  timestamp DateTime @default(now())
 }
