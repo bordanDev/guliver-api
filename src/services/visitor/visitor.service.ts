@@ -10,7 +10,7 @@ export class VisitorService {
       data: {
         deviceId: deviceId,
         count: count,
-        timestamp: timestamp ?? '',
+        timestamp: timestamp ?? new Date(),
       },
     });
   }
