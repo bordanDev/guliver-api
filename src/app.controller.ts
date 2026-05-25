@@ -81,4 +81,26 @@ export class AppController {
       return { success: false, error: err.message };
     }
   }
+
+  @Get('all-devices')
+  async getAllDevices() {
+    try {
+      const devices = await this.deviceService.getAll();
+      return { success: true, data: devices };
+    } catch (err) {
+      console.log(`[All Devices Error] ${err.message}`);
+      return { success: false, error: err.message };
+    }
+  }
+
+  @Get('/device/analytics/:mac')
+  async getDeviceAnalytics(@Param('mac') mac: string) {
+    try {
+      const logs = await this.visitor.getLogsByMac(mac);
+      return { success: true, data: logs };
+    } catch (err) {
+      console.log(`[Device Analytics Error] ${err.message}`);
+      return { success: false, error: err.message };
+    }
+  }
 }

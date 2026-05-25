@@ -1,12 +1,16 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDeviceDto, HeartbeatDeviceDto } from 'src/classes/device.dto';
+import { VisitorService } from '../visitor/visitor.service';
 
 @Injectable()
 export class DeviceService implements OnModuleInit, OnModuleDestroy {
   private intervalId: NodeJS.Timeout;
 
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private visitorService: VisitorService,
+  ) {}
 
   onModuleInit() {
     // Run status update every 15 seconds
@@ -92,6 +96,28 @@ export class DeviceService implements OnModuleInit, OnModuleDestroy {
         last_seen: new Date(),
         status: 'online',
       },
+    });
+  }
+
+  async getAll() {
+    const devices = await this.prisma.device.findMany({
+      include: {
+        location: true,
+      },
+      orderBy: {
+        id: 'asc',
+      },
+    });
+
+    const macs = devices.map(d => d.mac);
+    const statsMap = await this.visitorService.getVisitorStats(macs);
+
+    return devices.map((device) => {
+      const stats = statsMap.get(device.mac)!;
+      return {
+        ...device,
+        ...stats,
+      };
     });
   }
 }

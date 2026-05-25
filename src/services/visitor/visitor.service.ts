@@ -6,19 +6,41 @@ import { PrismaService } from '../prisma/prisma.service';
 export class VisitorService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createVisitorDto: CreateVisitorDto) {
-    // 1. Узнаем, сколько сейчас внутри
-    const aggregation = await this.prisma.visitorLog.aggregate({
-      where: { mac: createVisitorDto.mac },
+  async getVisitorStats(macs?: string[]) {
+    const whereClause = macs && macs.length > 0 ? { mac: { in: macs } } : {};
+    
+    const aggregates = await this.prisma.visitorLog.groupBy({
+      by: ['mac'],
+      where: whereClause,
       _sum: {
         deltaIn: true,
         deltaOut: true,
       },
     });
 
-    const currentIn = aggregation._sum.deltaIn || 0;
-    const currentOut = aggregation._sum.deltaOut || 0;
-    const currentInside = currentIn - currentOut;
+    const statsMap = new Map<string, { totalIn: number; totalOut: number; currentInside: number }>();
+    
+    if (macs) {
+      macs.forEach(mac => statsMap.set(mac, { totalIn: 0, totalOut: 0, currentInside: 0 }));
+    }
+
+    for (const agg of aggregates) {
+      const totalIn = agg._sum.deltaIn || 0;
+      const totalOut = agg._sum.deltaOut || 0;
+      statsMap.set(agg.mac, {
+        totalIn,
+        totalOut,
+        currentInside: Math.max(0, totalIn - totalOut),
+      });
+    }
+
+    return statsMap;
+  }
+
+  async create(createVisitorDto: CreateVisitorDto) {
+    // 1. Узнаем, сколько сейчас внутри
+    const statsMap = await this.getVisitorStats([createVisitorDto.mac]);
+    const currentInside = statsMap.get(createVisitorDto.mac)?.currentInside || 0;
 
     let actualDeltaOut = createVisitorDto.deltaOut;
 
@@ -46,6 +68,13 @@ export class VisitorService {
     return this.prisma.visitorLog.findMany();
   }
 
+  async getLogsByMac(mac: string) {
+    return this.prisma.visitorLog.findMany({
+      where: { mac },
+      orderBy: { timestamp: 'asc' },
+    });
+  }
+
   async getCountsByDeviceId(deviceId: number) {
     const device = await this.prisma.device.findUnique({
       where: { id: deviceId },
@@ -55,24 +84,14 @@ export class VisitorService {
       throw new Error(`Device with ID ${deviceId} not found.`);
     }
 
-    const aggregation = await this.prisma.visitorLog.aggregate({
-      where: { mac: device.mac },
-      _sum: {
-        deltaIn: true,
-        deltaOut: true,
-      },
-    });
-
-    const totalIn = aggregation._sum.deltaIn || 0;
-    const totalOut = aggregation._sum.deltaOut || 0;
+    const statsMap = await this.getVisitorStats([device.mac]);
+    const stats = statsMap.get(device.mac)!;
 
     return {
       deviceId,
       deviceName: device.name,
       mac: device.mac,
-      totalIn,
-      totalOut,
-      currentInside: Math.max(0, totalIn - totalOut),
+      ...stats,
     };
   }
 
