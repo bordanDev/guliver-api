@@ -28,32 +28,40 @@ export type AggregateVisitorLog = {
 
 export type VisitorLogAvgAggregateOutputType = {
   id: number | null
-  count: number | null
+  deltaIn: number | null
+  deltaOut: number | null
 }
 
 export type VisitorLogSumAggregateOutputType = {
   id: number | null
-  count: number | null
+  deltaIn: number | null
+  deltaOut: number | null
 }
 
 export type VisitorLogMinAggregateOutputType = {
   id: number | null
-  deviceId: string | null
-  count: number | null
+  mac: string | null
+  deviceName: string | null
+  deltaIn: number | null
+  deltaOut: number | null
   timestamp: Date | null
 }
 
 export type VisitorLogMaxAggregateOutputType = {
   id: number | null
-  deviceId: string | null
-  count: number | null
+  mac: string | null
+  deviceName: string | null
+  deltaIn: number | null
+  deltaOut: number | null
   timestamp: Date | null
 }
 
 export type VisitorLogCountAggregateOutputType = {
   id: number
-  deviceId: number
-  count: number
+  mac: number
+  deviceName: number
+  deltaIn: number
+  deltaOut: number
   timestamp: number
   _all: number
 }
@@ -61,32 +69,40 @@ export type VisitorLogCountAggregateOutputType = {
 
 export type VisitorLogAvgAggregateInputType = {
   id?: true
-  count?: true
+  deltaIn?: true
+  deltaOut?: true
 }
 
 export type VisitorLogSumAggregateInputType = {
   id?: true
-  count?: true
+  deltaIn?: true
+  deltaOut?: true
 }
 
 export type VisitorLogMinAggregateInputType = {
   id?: true
-  deviceId?: true
-  count?: true
+  mac?: true
+  deviceName?: true
+  deltaIn?: true
+  deltaOut?: true
   timestamp?: true
 }
 
 export type VisitorLogMaxAggregateInputType = {
   id?: true
-  deviceId?: true
-  count?: true
+  mac?: true
+  deviceName?: true
+  deltaIn?: true
+  deltaOut?: true
   timestamp?: true
 }
 
 export type VisitorLogCountAggregateInputType = {
   id?: true
-  deviceId?: true
-  count?: true
+  mac?: true
+  deviceName?: true
+  deltaIn?: true
+  deltaOut?: true
   timestamp?: true
   _all?: true
 }
@@ -179,8 +195,10 @@ export type VisitorLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 
 export type VisitorLogGroupByOutputType = {
   id: number
-  deviceId: string
-  count: number
+  mac: string
+  deviceName: string
+  deltaIn: number
+  deltaOut: number
   timestamp: Date
   _count: VisitorLogCountAggregateOutputType | null
   _avg: VisitorLogAvgAggregateOutputType | null
@@ -209,15 +227,19 @@ export type VisitorLogWhereInput = {
   OR?: Prisma.VisitorLogWhereInput[]
   NOT?: Prisma.VisitorLogWhereInput | Prisma.VisitorLogWhereInput[]
   id?: Prisma.IntFilter<"VisitorLog"> | number
-  deviceId?: Prisma.StringFilter<"VisitorLog"> | string
-  count?: Prisma.IntFilter<"VisitorLog"> | number
+  mac?: Prisma.StringFilter<"VisitorLog"> | string
+  deviceName?: Prisma.StringFilter<"VisitorLog"> | string
+  deltaIn?: Prisma.IntFilter<"VisitorLog"> | number
+  deltaOut?: Prisma.IntFilter<"VisitorLog"> | number
   timestamp?: Prisma.DateTimeFilter<"VisitorLog"> | Date | string
 }
 
 export type VisitorLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  deviceId?: Prisma.SortOrder
-  count?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
+  deviceName?: Prisma.SortOrder
+  deltaIn?: Prisma.SortOrder
+  deltaOut?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
@@ -226,15 +248,19 @@ export type VisitorLogWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.VisitorLogWhereInput | Prisma.VisitorLogWhereInput[]
   OR?: Prisma.VisitorLogWhereInput[]
   NOT?: Prisma.VisitorLogWhereInput | Prisma.VisitorLogWhereInput[]
-  deviceId?: Prisma.StringFilter<"VisitorLog"> | string
-  count?: Prisma.IntFilter<"VisitorLog"> | number
+  mac?: Prisma.StringFilter<"VisitorLog"> | string
+  deviceName?: Prisma.StringFilter<"VisitorLog"> | string
+  deltaIn?: Prisma.IntFilter<"VisitorLog"> | number
+  deltaOut?: Prisma.IntFilter<"VisitorLog"> | number
   timestamp?: Prisma.DateTimeFilter<"VisitorLog"> | Date | string
 }, "id">
 
 export type VisitorLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  deviceId?: Prisma.SortOrder
-  count?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
+  deviceName?: Prisma.SortOrder
+  deltaIn?: Prisma.SortOrder
+  deltaOut?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   _count?: Prisma.VisitorLogCountOrderByAggregateInput
   _avg?: Prisma.VisitorLogAvgOrderByAggregateInput
@@ -248,86 +274,110 @@ export type VisitorLogScalarWhereWithAggregatesInput = {
   OR?: Prisma.VisitorLogScalarWhereWithAggregatesInput[]
   NOT?: Prisma.VisitorLogScalarWhereWithAggregatesInput | Prisma.VisitorLogScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"VisitorLog"> | number
-  deviceId?: Prisma.StringWithAggregatesFilter<"VisitorLog"> | string
-  count?: Prisma.IntWithAggregatesFilter<"VisitorLog"> | number
+  mac?: Prisma.StringWithAggregatesFilter<"VisitorLog"> | string
+  deviceName?: Prisma.StringWithAggregatesFilter<"VisitorLog"> | string
+  deltaIn?: Prisma.IntWithAggregatesFilter<"VisitorLog"> | number
+  deltaOut?: Prisma.IntWithAggregatesFilter<"VisitorLog"> | number
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"VisitorLog"> | Date | string
 }
 
 export type VisitorLogCreateInput = {
-  deviceId: string
-  count: number
+  mac: string
+  deviceName: string
+  deltaIn: number
+  deltaOut: number
   timestamp?: Date | string
 }
 
 export type VisitorLogUncheckedCreateInput = {
   id?: number
-  deviceId: string
-  count: number
+  mac: string
+  deviceName: string
+  deltaIn: number
+  deltaOut: number
   timestamp?: Date | string
 }
 
 export type VisitorLogUpdateInput = {
-  deviceId?: Prisma.StringFieldUpdateOperationsInput | string
-  count?: Prisma.IntFieldUpdateOperationsInput | number
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceName?: Prisma.StringFieldUpdateOperationsInput | string
+  deltaIn?: Prisma.IntFieldUpdateOperationsInput | number
+  deltaOut?: Prisma.IntFieldUpdateOperationsInput | number
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type VisitorLogUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  deviceId?: Prisma.StringFieldUpdateOperationsInput | string
-  count?: Prisma.IntFieldUpdateOperationsInput | number
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceName?: Prisma.StringFieldUpdateOperationsInput | string
+  deltaIn?: Prisma.IntFieldUpdateOperationsInput | number
+  deltaOut?: Prisma.IntFieldUpdateOperationsInput | number
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type VisitorLogCreateManyInput = {
   id?: number
-  deviceId: string
-  count: number
+  mac: string
+  deviceName: string
+  deltaIn: number
+  deltaOut: number
   timestamp?: Date | string
 }
 
 export type VisitorLogUpdateManyMutationInput = {
-  deviceId?: Prisma.StringFieldUpdateOperationsInput | string
-  count?: Prisma.IntFieldUpdateOperationsInput | number
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceName?: Prisma.StringFieldUpdateOperationsInput | string
+  deltaIn?: Prisma.IntFieldUpdateOperationsInput | number
+  deltaOut?: Prisma.IntFieldUpdateOperationsInput | number
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type VisitorLogUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  deviceId?: Prisma.StringFieldUpdateOperationsInput | string
-  count?: Prisma.IntFieldUpdateOperationsInput | number
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
+  deviceName?: Prisma.StringFieldUpdateOperationsInput | string
+  deltaIn?: Prisma.IntFieldUpdateOperationsInput | number
+  deltaOut?: Prisma.IntFieldUpdateOperationsInput | number
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type VisitorLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  deviceId?: Prisma.SortOrder
-  count?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
+  deviceName?: Prisma.SortOrder
+  deltaIn?: Prisma.SortOrder
+  deltaOut?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
 export type VisitorLogAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  count?: Prisma.SortOrder
+  deltaIn?: Prisma.SortOrder
+  deltaOut?: Prisma.SortOrder
 }
 
 export type VisitorLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  deviceId?: Prisma.SortOrder
-  count?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
+  deviceName?: Prisma.SortOrder
+  deltaIn?: Prisma.SortOrder
+  deltaOut?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
 export type VisitorLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  deviceId?: Prisma.SortOrder
-  count?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
+  deviceName?: Prisma.SortOrder
+  deltaIn?: Prisma.SortOrder
+  deltaOut?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
 }
 
 export type VisitorLogSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  count?: Prisma.SortOrder
+  deltaIn?: Prisma.SortOrder
+  deltaOut?: Prisma.SortOrder
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -338,41 +388,51 @@ export type DateTimeFieldUpdateOperationsInput = {
 
 export type VisitorLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  deviceId?: boolean
-  count?: boolean
+  mac?: boolean
+  deviceName?: boolean
+  deltaIn?: boolean
+  deltaOut?: boolean
   timestamp?: boolean
 }, ExtArgs["result"]["visitorLog"]>
 
 export type VisitorLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  deviceId?: boolean
-  count?: boolean
+  mac?: boolean
+  deviceName?: boolean
+  deltaIn?: boolean
+  deltaOut?: boolean
   timestamp?: boolean
 }, ExtArgs["result"]["visitorLog"]>
 
 export type VisitorLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  deviceId?: boolean
-  count?: boolean
+  mac?: boolean
+  deviceName?: boolean
+  deltaIn?: boolean
+  deltaOut?: boolean
   timestamp?: boolean
 }, ExtArgs["result"]["visitorLog"]>
 
 export type VisitorLogSelectScalar = {
   id?: boolean
-  deviceId?: boolean
-  count?: boolean
+  mac?: boolean
+  deviceName?: boolean
+  deltaIn?: boolean
+  deltaOut?: boolean
   timestamp?: boolean
 }
 
-export type VisitorLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "deviceId" | "count" | "timestamp", ExtArgs["result"]["visitorLog"]>
+export type VisitorLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "mac" | "deviceName" | "deltaIn" | "deltaOut" | "timestamp", ExtArgs["result"]["visitorLog"]>
 
 export type $VisitorLogPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "VisitorLog"
   objects: {}
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
-    deviceId: string
-    count: number
+    mac: string
+    deviceName: string
+    deltaIn: number
+    deltaOut: number
     timestamp: Date
   }, ExtArgs["result"]["visitorLog"]>
   composites: {}
@@ -798,8 +858,10 @@ export interface Prisma__VisitorLogClient<T, Null = never, ExtArgs extends runti
  */
 export interface VisitorLogFieldRefs {
   readonly id: Prisma.FieldRef<"VisitorLog", 'Int'>
-  readonly deviceId: Prisma.FieldRef<"VisitorLog", 'String'>
-  readonly count: Prisma.FieldRef<"VisitorLog", 'Int'>
+  readonly mac: Prisma.FieldRef<"VisitorLog", 'String'>
+  readonly deviceName: Prisma.FieldRef<"VisitorLog", 'String'>
+  readonly deltaIn: Prisma.FieldRef<"VisitorLog", 'Int'>
+  readonly deltaOut: Prisma.FieldRef<"VisitorLog", 'Int'>
   readonly timestamp: Prisma.FieldRef<"VisitorLog", 'DateTime'>
 }
     

@@ -17,9 +17,7 @@ export class AppController {
 
   @Post('/set-visitor')
   setVisitorActivities(@Body() visitorItemDto: CreateVisitorDto): void {
-    this.visitor
-      .create(visitorItemDto.deviceId, visitorItemDto.count)
-      .catch((err) => console.log(err));
+    this.visitor.create(visitorItemDto).catch((err) => console.log(err));
   }
 
   @Get('all-visitors')

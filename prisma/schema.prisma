@@ -31,7 +31,9 @@ model Location {
 
 model VisitorLog {
   id        Int      @id @default(autoincrement())
-  deviceId  String
-  count     Int
+  mac       String
+  deviceName  String
+  deltaIn     Int
+  deltaOut    Int
   timestamp DateTime @default(now())
 }

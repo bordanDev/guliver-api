@@ -688,8 +688,10 @@ export type LocationScalarFieldEnum = (typeof LocationScalarFieldEnum)[keyof typ
 
 export const VisitorLogScalarFieldEnum = {
   id: 'id',
-  deviceId: 'deviceId',
-  count: 'count',
+  mac: 'mac',
+  deviceName: 'deviceName',
+  deltaIn: 'deltaIn',
+  deltaOut: 'deltaOut',
   timestamp: 'timestamp'
 } as const
 

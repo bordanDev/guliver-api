@@ -1,16 +1,19 @@
 import { Injectable } from '@nestjs/common';
+import { CreateVisitorDto } from 'src/classes/create-visitor.class';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class VisitorService {
   constructor(private prisma: PrismaService) {}
 
-  create(deviceId: string, count: number, timestamp?: string) {
+  create(createVisitorDto: CreateVisitorDto) {
     return this.prisma.visitorLog.create({
       data: {
-        deviceId: deviceId,
-        count: count,
-        timestamp: timestamp ?? new Date(),
+        mac: createVisitorDto.mac,
+        deltaIn: createVisitorDto.deltaIn,
+        deltaOut: createVisitorDto.deltaOut,
+        deviceName: createVisitorDto.deviceName,
+        timestamp: createVisitorDto.timestamp ?? new Date(),
       },
     });
   }
