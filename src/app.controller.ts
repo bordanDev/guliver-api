@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CreateVisitorDto } from './classes/create-visitor.class';
 import { VisitorService } from './services/visitor/visitor.service';
@@ -46,6 +46,38 @@ export class AppController {
       return { success: true, device };
     } catch (err) {
       console.log(`[Heartbeat Error] ${err.message}`);
+      return { success: false, error: err.message };
+    }
+  }
+
+  @Get('/device/:id/visitors')
+  async getDeviceVisitors(@Param('id') id: string) {
+    const deviceId = parseInt(id, 10);
+    if (isNaN(deviceId)) {
+      return { success: false, error: 'Invalid device ID' };
+    }
+    
+    try {
+      const stats = await this.visitor.getCountsByDeviceId(deviceId);
+      return { success: true, data: stats };
+    } catch (err) {
+      console.log(`[Device Visitors Error] ${err.message}`);
+      return { success: false, error: err.message };
+    }
+  }
+
+  @Post('/device/:id/reset')
+  async resetDeviceVisitors(@Param('id') id: string) {
+    const deviceId = parseInt(id, 10);
+    if (isNaN(deviceId)) {
+      return { success: false, error: 'Invalid device ID' };
+    }
+
+    try {
+      const result = await this.visitor.resetCountsForDevice(deviceId);
+      return result;
+    } catch (err) {
+      console.log(`[Device Reset Error] ${err.message}`);
       return { success: false, error: err.message };
     }
   }
