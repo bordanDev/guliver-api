@@ -78,7 +78,8 @@ export const DeviceScalarFieldEnum = {
   name: 'name',
   ip: 'ip',
   firmware: 'firmware',
-  last_seen: 'last_seen'
+  last_seen: 'last_seen',
+  status: 'status'
 } as const
 
 export type DeviceScalarFieldEnum = (typeof DeviceScalarFieldEnum)[keyof typeof DeviceScalarFieldEnum]

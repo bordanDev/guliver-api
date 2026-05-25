@@ -21,6 +21,7 @@ model Device {
   ip        String?
   firmware  String?
   last_seen DateTime  @default(now())
+  status    String    @default("never seen")
   location  Location?
 }
 
