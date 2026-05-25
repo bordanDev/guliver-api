@@ -36,17 +36,29 @@ export type DeviceSumAggregateOutputType = {
 
 export type DeviceMinAggregateOutputType = {
   id: number | null
+  mac: string | null
   name: string | null
+  ip: string | null
+  firmware: string | null
+  last_seen: Date | null
 }
 
 export type DeviceMaxAggregateOutputType = {
   id: number | null
+  mac: string | null
   name: string | null
+  ip: string | null
+  firmware: string | null
+  last_seen: Date | null
 }
 
 export type DeviceCountAggregateOutputType = {
   id: number
+  mac: number
   name: number
+  ip: number
+  firmware: number
+  last_seen: number
   _all: number
 }
 
@@ -61,17 +73,29 @@ export type DeviceSumAggregateInputType = {
 
 export type DeviceMinAggregateInputType = {
   id?: true
+  mac?: true
   name?: true
+  ip?: true
+  firmware?: true
+  last_seen?: true
 }
 
 export type DeviceMaxAggregateInputType = {
   id?: true
+  mac?: true
   name?: true
+  ip?: true
+  firmware?: true
+  last_seen?: true
 }
 
 export type DeviceCountAggregateInputType = {
   id?: true
+  mac?: true
   name?: true
+  ip?: true
+  firmware?: true
+  last_seen?: true
   _all?: true
 }
 
@@ -163,7 +187,11 @@ export type DeviceGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type DeviceGroupByOutputType = {
   id: number
+  mac: string
   name: string
+  ip: string | null
+  firmware: string | null
+  last_seen: Date
   _count: DeviceCountAggregateOutputType | null
   _avg: DeviceAvgAggregateOutputType | null
   _sum: DeviceSumAggregateOutputType | null
@@ -191,28 +219,44 @@ export type DeviceWhereInput = {
   OR?: Prisma.DeviceWhereInput[]
   NOT?: Prisma.DeviceWhereInput | Prisma.DeviceWhereInput[]
   id?: Prisma.IntFilter<"Device"> | number
+  mac?: Prisma.StringFilter<"Device"> | string
   name?: Prisma.StringFilter<"Device"> | string
+  ip?: Prisma.StringNullableFilter<"Device"> | string | null
+  firmware?: Prisma.StringNullableFilter<"Device"> | string | null
+  last_seen?: Prisma.DateTimeFilter<"Device"> | Date | string
   location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
 }
 
 export type DeviceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ip?: Prisma.SortOrderInput | Prisma.SortOrder
+  firmware?: Prisma.SortOrderInput | Prisma.SortOrder
+  last_seen?: Prisma.SortOrder
   location?: Prisma.LocationOrderByWithRelationInput
 }
 
 export type DeviceWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  mac?: string
   AND?: Prisma.DeviceWhereInput | Prisma.DeviceWhereInput[]
   OR?: Prisma.DeviceWhereInput[]
   NOT?: Prisma.DeviceWhereInput | Prisma.DeviceWhereInput[]
   name?: Prisma.StringFilter<"Device"> | string
+  ip?: Prisma.StringNullableFilter<"Device"> | string | null
+  firmware?: Prisma.StringNullableFilter<"Device"> | string | null
+  last_seen?: Prisma.DateTimeFilter<"Device"> | Date | string
   location?: Prisma.XOR<Prisma.LocationNullableScalarRelationFilter, Prisma.LocationWhereInput> | null
-}, "id">
+}, "id" | "mac">
 
 export type DeviceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ip?: Prisma.SortOrderInput | Prisma.SortOrder
+  firmware?: Prisma.SortOrderInput | Prisma.SortOrder
+  last_seen?: Prisma.SortOrder
   _count?: Prisma.DeviceCountOrderByAggregateInput
   _avg?: Prisma.DeviceAvgOrderByAggregateInput
   _max?: Prisma.DeviceMaxOrderByAggregateInput
@@ -225,48 +269,84 @@ export type DeviceScalarWhereWithAggregatesInput = {
   OR?: Prisma.DeviceScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DeviceScalarWhereWithAggregatesInput | Prisma.DeviceScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Device"> | number
+  mac?: Prisma.StringWithAggregatesFilter<"Device"> | string
   name?: Prisma.StringWithAggregatesFilter<"Device"> | string
+  ip?: Prisma.StringNullableWithAggregatesFilter<"Device"> | string | null
+  firmware?: Prisma.StringNullableWithAggregatesFilter<"Device"> | string | null
+  last_seen?: Prisma.DateTimeWithAggregatesFilter<"Device"> | Date | string
 }
 
 export type DeviceCreateInput = {
+  mac: string
   name: string
+  ip?: string | null
+  firmware?: string | null
+  last_seen?: Date | string
   location?: Prisma.LocationCreateNestedOneWithoutDeviceInput
 }
 
 export type DeviceUncheckedCreateInput = {
   id?: number
+  mac: string
   name: string
+  ip?: string | null
+  firmware?: string | null
+  last_seen?: Date | string
   location?: Prisma.LocationUncheckedCreateNestedOneWithoutDeviceInput
 }
 
 export type DeviceUpdateInput = {
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firmware?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_seen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUpdateOneWithoutDeviceNestedInput
 }
 
 export type DeviceUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firmware?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_seen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUncheckedUpdateOneWithoutDeviceNestedInput
 }
 
 export type DeviceCreateManyInput = {
   id?: number
+  mac: string
   name: string
+  ip?: string | null
+  firmware?: string | null
+  last_seen?: Date | string
 }
 
 export type DeviceUpdateManyMutationInput = {
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firmware?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_seen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeviceUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firmware?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_seen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeviceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ip?: Prisma.SortOrder
+  firmware?: Prisma.SortOrder
+  last_seen?: Prisma.SortOrder
 }
 
 export type DeviceAvgOrderByAggregateInput = {
@@ -275,12 +355,20 @@ export type DeviceAvgOrderByAggregateInput = {
 
 export type DeviceMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ip?: Prisma.SortOrder
+  firmware?: Prisma.SortOrder
+  last_seen?: Prisma.SortOrder
 }
 
 export type DeviceMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  mac?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  ip?: Prisma.SortOrder
+  firmware?: Prisma.SortOrder
+  last_seen?: Prisma.SortOrder
 }
 
 export type DeviceSumOrderByAggregateInput = {
@@ -294,6 +382,14 @@ export type DeviceScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -319,12 +415,20 @@ export type DeviceUpdateOneRequiredWithoutLocationNestedInput = {
 }
 
 export type DeviceCreateWithoutLocationInput = {
+  mac: string
   name: string
+  ip?: string | null
+  firmware?: string | null
+  last_seen?: Date | string
 }
 
 export type DeviceUncheckedCreateWithoutLocationInput = {
   id?: number
+  mac: string
   name: string
+  ip?: string | null
+  firmware?: string | null
+  last_seen?: Date | string
 }
 
 export type DeviceCreateOrConnectWithoutLocationInput = {
@@ -344,38 +448,62 @@ export type DeviceUpdateToOneWithWhereWithoutLocationInput = {
 }
 
 export type DeviceUpdateWithoutLocationInput = {
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firmware?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_seen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type DeviceUncheckedUpdateWithoutLocationInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  mac?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  ip?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firmware?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  last_seen?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
 
 export type DeviceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  mac?: boolean
   name?: boolean
+  ip?: boolean
+  firmware?: boolean
+  last_seen?: boolean
   location?: boolean | Prisma.Device$locationArgs<ExtArgs>
 }, ExtArgs["result"]["device"]>
 
 export type DeviceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  mac?: boolean
   name?: boolean
+  ip?: boolean
+  firmware?: boolean
+  last_seen?: boolean
 }, ExtArgs["result"]["device"]>
 
 export type DeviceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  mac?: boolean
   name?: boolean
+  ip?: boolean
+  firmware?: boolean
+  last_seen?: boolean
 }, ExtArgs["result"]["device"]>
 
 export type DeviceSelectScalar = {
   id?: boolean
+  mac?: boolean
   name?: boolean
+  ip?: boolean
+  firmware?: boolean
+  last_seen?: boolean
 }
 
-export type DeviceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name", ExtArgs["result"]["device"]>
+export type DeviceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "mac" | "name" | "ip" | "firmware" | "last_seen", ExtArgs["result"]["device"]>
 export type DeviceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   location?: boolean | Prisma.Device$locationArgs<ExtArgs>
 }
@@ -389,7 +517,11 @@ export type $DevicePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
+    mac: string
     name: string
+    ip: string | null
+    firmware: string | null
+    last_seen: Date
   }, ExtArgs["result"]["device"]>
   composites: {}
 }
@@ -815,7 +947,11 @@ export interface Prisma__DeviceClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface DeviceFieldRefs {
   readonly id: Prisma.FieldRef<"Device", 'Int'>
+  readonly mac: Prisma.FieldRef<"Device", 'String'>
   readonly name: Prisma.FieldRef<"Device", 'String'>
+  readonly ip: Prisma.FieldRef<"Device", 'String'>
+  readonly firmware: Prisma.FieldRef<"Device", 'String'>
+  readonly last_seen: Prisma.FieldRef<"Device", 'DateTime'>
 }
     
 

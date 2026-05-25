@@ -15,9 +15,13 @@ datasource db {
 }
 
 model Device {
-  id Int @default(autoincrement()) @id
-  name String
-  location Location?
+  id        Int       @default(autoincrement()) @id
+  mac       String    @unique
+  name      String
+  ip        String?
+  firmware  String?
+  last_seen DateTime  @default(now())
+  location  Location?
 }
 
 model Location {
