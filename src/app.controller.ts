@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, Sse } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { AppService } from './app.service';
 import { CreateVisitorDto } from './classes/create-visitor.class';
 import { VisitorService } from './services/visitor/visitor.service';
 import { DeviceService } from './services/device/device.service';
 import { RegisterDeviceDto, HeartbeatDeviceDto } from './classes/device.dto';
+import { SseService } from './services/sse/sse.service';
 
 @Controller()
 export class AppController {
@@ -11,6 +13,7 @@ export class AppController {
     private readonly appService: AppService,
     private readonly visitor: VisitorService,
     private readonly deviceService: DeviceService,
+    private readonly sseService: SseService,
   ) {}
 
   @Get('hello')
@@ -18,9 +21,17 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Sse('sse/occupancy')
+  streamOccupancy(): Observable<MessageEvent> {
+    return this.sseService.addClient();
+  }
+
   @Post('/set-visitor')
   setVisitorActivities(@Body() visitorItemDto: CreateVisitorDto): void {
-    this.visitor.create(visitorItemDto).catch((err) => console.log(err));
+    this.visitor
+      .create(visitorItemDto)
+      .then(() => this.emitCurrentState())
+      .catch((err) => console.log(err));
   }
 
   @Get('all-visitors')
@@ -101,6 +112,22 @@ export class AppController {
     } catch (err) {
       console.log(`[Device Analytics Error] ${err.message}`);
       return { success: false, error: err.message };
+    }
+  }
+
+  /**
+   * Fetches current state of all devices with visitor stats
+   * and broadcasts it to all connected SSE clients.
+   */
+  private async emitCurrentState(): Promise<void> {
+    try {
+      const devices = await this.deviceService.getAll();
+      this.sseService.emitOccupancyUpdate({
+        devices,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (err) {
+      console.error('[SSE Emit Error]', err.message);
     }
   }
 }
